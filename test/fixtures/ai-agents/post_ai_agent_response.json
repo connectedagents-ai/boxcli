@@ -1,0 +1,27 @@
+{
+    "extract": {
+        "type": "ai_agent_extract",
+        "accessState": "enabled",
+        "description": "Extract key contract clauses and deadlines"
+    },
+    "id": "12345",
+    "type": "ai_agent",
+    "origin": "enterprise",
+    "name": "Contract Review Agent",
+    "accessState": "enabled",
+    "createdBy": {
+        "id": "33333",
+        "type": "user"
+    },
+    "createdAt": {
+        "value": "2025-01-15T10:00:00.000Z"
+    },
+    "modifiedBy": {
+        "id": "33333",
+        "type": "user"
+    },
+    "modifiedAt": {
+        "value": "2025-01-15T10:00:00.000Z"
+    },
+    "iconReference": "https://cdn01.boxcdn.net/app-assets/aistudio/avatars/logo_legal.png"
+}

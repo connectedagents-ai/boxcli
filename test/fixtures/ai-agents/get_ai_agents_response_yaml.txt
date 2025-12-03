@@ -1,0 +1,28 @@
+Entries:
+    -
+        ID: '12345'
+        Type: ai_agent
+        Origin: enterprise
+        Name: Contract Review Agent
+        Access State: enabled
+        Created By:
+            ID: '33333'
+            Type: user
+        Created At:
+            Value: '2025-01-15T10:00:00.000Z'
+        Modified By:
+            ID: '33333'
+            Type: user
+        Modified At:
+            Value: '2025-01-15T10:00:00.000Z'
+        Icon Reference: https://cdn01.boxcdn.net/app-assets/aistudio/avatars/logo_legal.png
+    -
+        ID: '12346'
+        Type: ai_agent
+        Origin: enterprise
+        Name: Document Analysis Agent
+        Access State: disabled
+        Created At:
+            Value: '2025-01-14T10:00:00.000Z'
+        Modified At:
+            Value: '2025-01-14T10:00:00.000Z'
