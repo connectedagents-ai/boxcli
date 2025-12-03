@@ -130,7 +130,7 @@ This sets up the CLI to authenticate with `box_subject_type` set to `user` and `
 
 To authenticate as any application user (not just admins):
 
-1. Enable **Generate User Access Tokens** in the Box Developer Console (Configuration tab > Advanced Features)
+1. Enable **Generate User Access Tokens** in the [Box Developer Console][dev-console] (Configuration tab > Advanced Features)
 2. Create an environment using the same command as above with the appropriate user ID
 
 #### Common Errors
