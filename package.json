@@ -110,6 +110,9 @@
 			"@oclif/plugin-version"
 		],
 		"topics": {
+			"ai-agents": {
+				"description": "Manage AI Studio agents"
+			},
 			"autocomplete": {
 				"description": "Display autocomplete installation instructions"
 			},
