@@ -1,0 +1,21 @@
+{
+    "id": "12345",
+    "type": "ai_agent",
+    "origin": "enterprise",
+    "name": "Updated Agent Name",
+    "accessState": "enabled",
+    "createdBy": {
+        "id": "11111",
+        "type": "user"
+    },
+    "createdAt": {
+        "value": "2024-01-15T18:00:00.000Z"
+    },
+    "modifiedBy": {
+        "id": "11111",
+        "type": "user"
+    },
+    "modifiedAt": {
+        "value": "2024-01-15T20:00:00.000Z"
+    }
+}

@@ -1,0 +1,15 @@
+ID: '12345'
+Type: ai_agent
+Origin: enterprise
+Name: Test Agent
+Access State: enabled
+Created By:
+    ID: '11111'
+    Type: user
+Created At:
+    Value: '2024-01-15T18:00:00.000Z'
+Modified By:
+    ID: '11111'
+    Type: user
+Modified At:
+    Value: '2024-01-15T18:00:00.000Z'
