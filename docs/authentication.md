@@ -8,6 +8,11 @@ overview of how the Box API handles authentication.
   - [Developer Token](#developer-token)
   - [Server Auth with JWT](#server-auth-with-jwt)
   - [Server Auth with CCG](#server-auth-with-ccg)
+    - [Prerequisites](#prerequisites)
+    - [Setting Up CCG Authentication](#setting-up-ccg-authentication)
+    - [Authenticate as Service Account](#authenticate-as-service-account)
+    - [Authenticate as a User](#authenticate-as-a-user)
+    - [Common Errors](#common-errors)
   - [Traditional 3-Legged OAuth2](#traditional-3-legged-oauth2)
      - [Reauthorize OAuth2](#reauthorize-oauth2)
 
@@ -59,9 +64,8 @@ box configure:environments:set-current
 
 ### Server Auth with CCG
 
-Server auth allows your application to authenticate itself with the Box API
-for a given enterprise. 
-Client Credentials Grant (CCG) allows you to authenticate by providing `clientId` and `clientSecret` and `enterpriseId` of your app.
+Server authentication with Client Credentials Grant (CCG) allows your application to authenticate itself with the Box API using a client ID and client secret. This is a simpler alternative to JWT authentication when you don't need public/private key cryptography.
+
 By default, your application has a
 [Service Account](https://developer.box.com/en/guides/authentication/user-types/)
 that represents it and can perform API calls. The Service Account is separate
@@ -69,8 +73,19 @@ from the Box accounts of the application developer and the enterprise admin of
 any enterprise that has authorized the app — files stored in that account are
 not accessible in any other account by default, and vice versa.
 
-Adding a CCG environment is a similar process to adding a JWT environment. However, you must manually create a configuration file. 
-This file should contain `clientID`, `clientSecret` and `enterpriseId`. You can find this information in the [Box Developer Console][dev-console].
+#### Prerequisites
+
+Before setting up CCG authentication in the CLI, ensure you have:
+
+1. A Platform Application using **Server Authentication (with Client Credentials Grant)** in the [Box Developer Console][dev-console]
+2. **2FA enabled** on your Box account for viewing and copying the application's client secret from the Configuration tab
+3. The application is **authorized in the Box Admin Console**
+
+> **Security Note**: Your client secret is confidential and needs to be protected. Do not distribute your client secret via email, public forums, code repositories, distributed native applications, or client-side code. If you need additional security mechanisms, consider using JWT authentication instead.
+
+#### Setting Up CCG Authentication
+
+Adding a CCG environment requires a configuration file containing your `clientID`, `clientSecret`, and `enterpriseID`. You can find this information in the [Box Developer Console][dev-console].
 
 Example configuration file:
 
@@ -84,23 +99,59 @@ Example configuration file:
 }
 ```
 
-Then create a new environment with `--ccg-auth` flag and point it to the configuration file
+#### Authenticate as Service Account
+
+To authenticate as your application's Service Account, create an environment with the `--ccg-auth` flag:
 
 ```bash
 box configure:environments:add /path/to/file/config.json --ccg-auth
 ```
 
-Remember to set your current environment to the proper one
+This sets up the CLI to authenticate with `box_subject_type` set to `enterprise` and `box_subject_id` set to your enterprise ID.
+
+Remember to set your current environment to the proper one:
 
 ```bash
 box configure:environments:set-current
 ```
 
-An environment for making calls as an App User or Managed User can be created just like a Service Account environment. You need to pass an additional `--ccg-user` flag with `userId` as the value
+#### Authenticate as a User
+
+To authenticate as an admin or managed user, you need to:
+
+1. Enable **App + Enterprise Access** and **Generate User Access Tokens** in the [Box Developer Console][dev-console] (found in the Configuration tab under Advanced Features)
+2. Create an environment with both `--ccg-auth` and `--ccg-user` flags:
 
 ```bash
 box configure:environments:add /path/to/file/config.json --ccg-auth --ccg-user "USER_ID"
 ```
+
+This sets up the CLI to authenticate with `box_subject_type` set to `user` and `box_subject_id` set to the specified user ID.
+
+To authenticate as any application user (not just admins):
+
+1. Enable **Generate User Access Tokens** in the [Box Developer Console][dev-console] (Configuration tab > Advanced Features)
+2. Create an environment using the same command as above with the appropriate user ID
+
+#### Common Errors
+
+**Grant credentials are invalid**
+
+During authentication, you may encounter this error:
+
+```
+Grant credentials are invalid [400 Bad Request] invalid_grant - Grant credentials are invalid
+```
+
+This error indicates one of the following issues:
+
+- The client ID and client secret are incorrect or do not belong to the same application
+- The `box_subject_id` (user ID or enterprise ID) cannot be used based on the selected application access:
+  - A CCG app with **App Access Only** can authenticate as its service account (`box_subject_type` of `enterprise`), but cannot authenticate as a managed user or admin
+  - To use `box_subject_type` of `user`, your application must be configured to generate user access tokens in the Advanced Features section of the Configuration tab
+- Your application has not been authorized in the Box Admin Console
+
+> **Note**: After making changes to your app settings in the Developer Console, don't forget to re-authorize the application in the Admin Console.
 
 ### Traditional 3-Legged OAuth2
 
