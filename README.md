@@ -38,6 +38,7 @@ Among other features, Box CLI includes the following functionality:
   - [Usage](#usage)
 - [Command Topics](#command-topics)
   - [Questions, Bugs, and Feature Requests?](#questions-bugs-and-feature-requests)
+  - [Other Box SDKs and Tools](#other-box-sdks-and-tools)
   - [Versions](#versions)
     - [Supported Version](#supported-version)
     - [Version schedule](#version-schedule)
@@ -183,6 +184,9 @@ Avatar URL: 'https://app.box.com/api/avatar/large/77777'
 [Browse the issues tickets](https://github.com/box/boxcli/issues)! Or, if that doesn't work, [file a new one](https://github.com/box/boxcli/issues/new) and someone will get back to you.   If you have general questions about the
 Box API, you can post to the [Box Developer Forum](https://community.box.com/t5/Developer-Forum/bd-p/DeveloperForum).
 
+## Other Box SDKs and Tools
+
+The Box CLI is just one of the many tools available for working with the Box API. For information about other Box SDKs and tools, including client SDKs for various programming languages, Postman collections, and UI libraries, see the [Box SDKs and Tools](docs/box-sdks-and-tools.md) documentation.
 
 ## Versions
 
