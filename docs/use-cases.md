@@ -28,7 +28,7 @@ Integrating Box with Vercel-deployed applications enables document management ca
 
 #### Prerequisites
 
-1. A Box Platform Application with [Server Authentication (JWT)](authentication.md#jwt-authentication) or [Client Credentials Grant (CCG)](authentication.md#client-credentials-grant-ccg)
+1. A Box Platform Application with [Server Authentication (JWT)](authentication.md#server-auth-with-jwt) or [Client Credentials Grant (CCG)](authentication.md#server-auth-with-ccg)
 2. A Vercel project with environment variables configured
 
 #### Environment Setup
