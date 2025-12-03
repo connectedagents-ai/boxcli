@@ -55,7 +55,7 @@ Here's what you can expect from v10:
 
 ## Box CLI
 
-Box CLI is a user-friendly command line tool that allows both technical and non-technical users to leverage Box API to perform routine or bulk actions.
+Box CLI is a user-friendly command line tool that allows both technical and non-technical users to leverage the Box API to perform routine or bulk actions.
 
 | Platform | Status | API Parity | Repository |
 |----------|--------|------------|------------|
@@ -97,7 +97,7 @@ Extend your application with pre-built UI components to browse, share, and previ
 
 ## Unofficial & Community Tools
 
-The following tools are developed by Box and maintained by Box and its community members. These tools do not receive regular product updates or security updates.
+The following tools are developed by Box and maintained by Box and community members. These tools do not receive regular product updates or security updates.
 
 | Platform | Maintained? | API Parity |
 |----------|-------------|------------|
