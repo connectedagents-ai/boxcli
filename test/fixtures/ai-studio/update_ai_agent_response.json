@@ -1,0 +1,13 @@
+{
+    "id": "12345",
+    "type": "ai_agent",
+    "origin": "box_custom",
+    "name": "Updated Contract Review Agent",
+    "accessState": "disabled",
+    "createdAt": {
+        "value": "2024-01-15T10:30:00.000Z"
+    },
+    "modifiedAt": {
+        "value": "2024-01-16T10:30:00.000Z"
+    }
+}
