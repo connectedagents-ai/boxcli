@@ -29,7 +29,8 @@ class AiAgentsCreateCommand extends BoxCommand {
 
 		let agent = await this.tsClient.aiStudio.createAiAgent(requestBody);
 		delete agent.rawData;
-		await this.output(agent);
+
+		await (flags['id-only'] ? this.output(agent.id) : this.output(agent));
 	}
 }
 
