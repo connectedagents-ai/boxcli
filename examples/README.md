@@ -10,6 +10,7 @@ There are the following scripts available:
 5. [Manage Groups and Collaborations](/examples/Mass%20Groups%20%26%20Collaborations%20Update)
 6. [Extract metadata](/examples/Metadata%20Extraction)
 7. [Integration Mappings](/examples/Integration%20Mappings/)
+8. [Box AI Enhanced Extract Agent](/examples/Enhanced%20Extract%20Agent)
 
 ## Disclaimer
 This folder is a collection of open source examples and should not be treated as an officially supported product. Use at your own risk and as a source of example how to use Box CLI.
