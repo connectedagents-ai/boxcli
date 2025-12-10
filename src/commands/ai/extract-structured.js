@@ -45,6 +45,7 @@ AiExtractStructuredCommand.description =
 AiExtractStructuredCommand.examples = [
 	'box ai:extract-structured --items="id=12345,type=file" --fields "key=hobby,type=multiSelect,description=Person hobby,prompt=What is your hobby?,displayName=Hobby,options=Guitar;Books"',
 	'box ai:extract-structured --items="id=12345,type=file" --metadata-template="type=metadata_template,scope=enterprise,template_key=test" --ai-agent \'{"type":"ai_agent_extract_structured","basicText":{"llmEndpointParams":{"type":"openai_params","frequencyPenalty": 1.5,"presencePenalty": 1.5,"stop": "<|im_end|>","temperature": 0,"topP": 1},"model": "azure__openai__gpt_4o_mini","numTokensForCompletion": 8400,"promptTemplate": "It is, consider these travel options and answer the.","systemMessage": "You are a helpful travel assistant specialized in budget travel"}}}\'',
+	'box ai:extract-structured --items="id=12345,type=file" --metadata-template="type=metadata_template,scope=enterprise,template_key=InvoicePO" --ai-agent \'{"id":"enhanced_extract_agent","type":"ai_agent_id"}\'',
 ];
 AiExtractStructuredCommand._endpoint = 'post_ai_extract_structured';
 
@@ -199,7 +200,7 @@ AiExtractStructuredCommand.flags = {
 	'ai-agent': Flags.string({
 		required: false,
 		description:
-			'The AI agent to be used for the structured extraction, provided as a JSON string. Example: {"type": "ai_agent_extract_structured", "basicText": {"model": "azure__openai__gpt_4o_mini", "promptTemplate": "Answer the question based on {content}"}}',
+			'The AI agent to be used for the structured extraction, provided as a JSON string. You can either pass a full agent configuration or reference a pre-defined agent by ID. Example (agent reference): {"id": "enhanced_extract_agent", "type": "ai_agent_id"}. Example (full config): {"type": "ai_agent_extract_structured", "basicText": {"model": "azure__openai__gpt_4o_mini", "promptTemplate": "Answer the question based on {content}"}}',
 		parse(input) {
 			try {
 				return JSON.parse(input);

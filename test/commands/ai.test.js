@@ -687,4 +687,93 @@ describe('AI', function () {
 				}
 			);
 	});
+
+	describe('ai:extract-structured with enhanced extract agent', function () {
+		const expectedRequestBody = {
+			items: [
+				{
+					id: '12345',
+					type: 'file',
+				},
+			],
+			metadata_template: {
+				type: 'metadata_template',
+				scope: 'enterprise',
+				template_key: 'InvoicePO',
+			},
+			ai_agent: {
+				id: 'enhanced_extract_agent',
+				type: 'ai_agent_id',
+			},
+		};
+		const expectedResponseBody = {
+			answer: {
+				firstName: 'John',
+				lastName: 'Doe',
+			},
+			created_at: '2025-04-29T07:25:24.366-07:00',
+			completion_reason: 'done',
+			ai_agent_info: {
+				models: [
+					{
+						name: 'google__gemini_2_0_flash_001',
+						provider: 'google',
+					},
+				],
+				processor: 'basic_text',
+			},
+		};
+
+		const fixture = getFixture('ai/post_ai_extract_structured_response');
+		const yamlFixture = getFixture(
+			'ai/post_ai_extract_structured_response_yaml.txt'
+		);
+
+		test.nock(TEST_API_ROOT, (api) => {
+			api.post('/2.0/ai/extract_structured', expectedRequestBody).reply(
+				200,
+				expectedResponseBody
+			);
+		})
+			.stdout()
+			.command([
+				'ai:extract-structured',
+				'--items=id=12345,type=file',
+				'--metadata-template=type=metadata_template,scope=enterprise,template_key=InvoicePO',
+				'--ai-agent',
+				'{"id":"enhanced_extract_agent","type":"ai_agent_id"}',
+				'--json',
+				'--token=test',
+			])
+
+			.it(
+				'should send the correct request with enhanced extract agent and output the response (JSON Output)',
+				(context) => {
+					assert.equal(context.stdout, fixture);
+				}
+			);
+
+		test.nock(TEST_API_ROOT, (api) => {
+			api.post('/2.0/ai/extract_structured', expectedRequestBody).reply(
+				200,
+				expectedResponseBody
+			);
+		})
+			.stdout()
+			.command([
+				'ai:extract-structured',
+				'--items=id=12345,type=file',
+				'--metadata-template=type=metadata_template,scope=enterprise,template_key=InvoicePO',
+				'--ai-agent',
+				'{"id":"enhanced_extract_agent","type":"ai_agent_id"}',
+				'--token=test',
+			])
+
+			.it(
+				'should send the correct request with enhanced extract agent and output the response (YAML Output)',
+				(context) => {
+					assert.equal(context.stdout, yamlFixture);
+				}
+			);
+	});
 });
