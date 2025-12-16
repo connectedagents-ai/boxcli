@@ -98,25 +98,56 @@ USAGE
     [--metadata-template <value>] [--ai-agent <value>]
 
 FLAGS
-  -h, --help                       Show CLI help
-  -q, --quiet                      Suppress any non-error output to stderr
-  -s, --save                       Save report to default reports folder on disk
-  -t, --token=<value>              Provide a token to perform this call
-  -v, --verbose                    Show verbose output, which can be helpful for debugging
-  -y, --yes                        Automatically respond yes to all confirmation prompts
-      --ai-agent=<value>           The AI agent to be used for the structured extraction, provided as a JSON string.
-                                   Example: {"type": "ai_agent_extract_structured", "basicText": {"model":
-                                   "azure__openai__gpt_4o_mini", "promptTemplate": "Answer the question based on
-                                   {content}"}}
-      --as-user=<value>            Provide an ID for a user
-      --bulk-file-path=<value>     File path to bulk .csv or .json objects
-      --csv                        Output formatted CSV
-      --fields=<value>...          The fields to be extracted from the provided items.
-      --items=<value>...           (required) The items that LLM will process.
-      --json                       Output formatted JSON
-      --metadata-template=<value>  The metadata template containing the fields to extract.
-      --no-color                   Turn off colors for logging
-      --save-to-file-path=<value>  Override default file path to save report
+  -h, --help
+      Show CLI help
+
+  -q, --quiet
+      Suppress any non-error output to stderr
+
+  -s, --save
+      Save report to default reports folder on disk
+
+  -t, --token=<value>
+      Provide a token to perform this call
+
+  -v, --verbose
+      Show verbose output, which can be helpful for debugging
+
+  -y, --yes
+      Automatically respond yes to all confirmation prompts
+
+  --ai-agent=<value>
+      The AI agent to be used for the structured extraction, provided as a JSON string. You can either pass a full agent
+      configuration or reference a pre-defined agent by ID. Example (agent reference): {"id": "enhanced_extract_agent",
+      "type": "ai_agent_id"}. Example (full config): {"type": "ai_agent_extract_structured", "basicText": {"model":
+      "azure__openai__gpt_4o_mini", "promptTemplate": "Answer the question based on {content}"}}
+
+  --as-user=<value>
+      Provide an ID for a user
+
+  --bulk-file-path=<value>
+      File path to bulk .csv or .json objects
+
+  --csv
+      Output formatted CSV
+
+  --fields=<value>...
+      The fields to be extracted from the provided items.
+
+  --items=<value>...
+      (required) The items that LLM will process.
+
+  --json
+      Output formatted JSON
+
+  --metadata-template=<value>
+      The metadata template containing the fields to extract.
+
+  --no-color
+      Turn off colors for logging
+
+  --save-to-file-path=<value>
+      Override default file path to save report
 
 DESCRIPTION
   Sends an AI request to supported Large Language Models (LLMs) and returns extracted metadata as a set of key-value
@@ -127,6 +158,8 @@ EXAMPLES
   $ box ai:extract-structured --items="id=12345,type=file" --fields "key=hobby,type=multiSelect,description=Person hobby,prompt=What is your hobby?,displayName=Hobby,options=Guitar;Books"
 
   $ box ai:extract-structured --items="id=12345,type=file" --metadata-template="type=metadata_template,scope=enterprise,template_key=test" --ai-agent '{"type":"ai_agent_extract_structured","basicText":{"llmEndpointParams":{"type":"openai_params","frequencyPenalty": 1.5,"presencePenalty": 1.5,"stop": "<|im_end|>","temperature": 0,"topP": 1},"model": "azure__openai__gpt_4o_mini","numTokensForCompletion": 8400,"promptTemplate": "It is, consider these travel options and answer the.","systemMessage": "You are a helpful travel assistant specialized in budget travel"}}}'
+
+  $ box ai:extract-structured --items="id=12345,type=file" --metadata-template="type=metadata_template,scope=enterprise,template_key=InvoicePO" --ai-agent '{"id":"enhanced_extract_agent","type":"ai_agent_id"}'
 ```
 
 _See code: [src/commands/ai/extract-structured.js](https://github.com/box/boxcli/blob/v4.5.0/src/commands/ai/extract-structured.js)_
