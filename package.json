@@ -110,6 +110,12 @@
 			"@oclif/plugin-version"
 		],
 		"topics": {
+			"ai-studio": {
+				"description": "Manage AI Studio agents"
+			},
+			"ai-studio:agents": {
+				"description": "Manage AI agents in Box AI Studio"
+			},
 			"autocomplete": {
 				"description": "Display autocomplete installation instructions"
 			},
