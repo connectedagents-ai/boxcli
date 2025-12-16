@@ -11,5 +11,9 @@ There are the following scripts available:
 6. [Extract metadata](/examples/Metadata%20Extraction)
 7. [Integration Mappings](/examples/Integration%20Mappings/)
 
+## Additional Resources
+
+For more advanced integration patterns, including serverless deployments, AI-powered document pipelines, and multi-agent applications, see the [Use Cases Guide](/docs/use-cases.md).
+
 ## Disclaimer
 This folder is a collection of open source examples and should not be treated as an officially supported product. Use at your own risk and as a source of example how to use Box CLI.
