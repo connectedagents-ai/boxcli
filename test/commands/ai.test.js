@@ -687,4 +687,271 @@ describe('AI', function () {
 				}
 			);
 	});
+
+	describe('ai-agents', function () {
+		const listExpectedResponseBody = {
+			entries: [
+				{
+					id: '12345',
+					type: 'ai_agent',
+					origin: 'enterprise',
+					name: 'Test Agent',
+					access_state: 'enabled',
+					created_by: {
+						id: '11111',
+						type: 'user',
+					},
+					created_at: '2024-01-15T18:00:00.000Z',
+					modified_by: {
+						id: '11111',
+						type: 'user',
+					},
+					modified_at: '2024-01-15T18:00:00.000Z',
+				},
+			],
+			limit: 100,
+		};
+		const listFixture = getFixture('ai/get_ai_agents_response');
+		const listYamlFixture = getFixture('ai/get_ai_agents_response_yaml.txt');
+
+		test.nock(TEST_API_ROOT, (api) =>
+			api.get('/2.0/ai_agents').reply(200, listExpectedResponseBody)
+		)
+			.stdout()
+			.command(['ai-agents', '--json', '--token=test'])
+			.it(
+				'should list AI agents and output the response (JSON Output)',
+				(context) => {
+					assert.equal(context.stdout, listFixture);
+				}
+			);
+
+		test.nock(TEST_API_ROOT, (api) =>
+			api.get('/2.0/ai_agents').reply(200, listExpectedResponseBody)
+		)
+			.stdout()
+			.command(['ai-agents', '--token=test'])
+			.it(
+				'should list AI agents and output the response (YAML Output)',
+				(context) => {
+					assert.equal(context.stdout, listYamlFixture);
+				}
+			);
+
+		test.nock(TEST_API_ROOT, (api) =>
+			api
+				.get('/2.0/ai_agents')
+				.query({ mode: 'ask,text_gen' })
+				.reply(200, listExpectedResponseBody)
+		)
+			.stdout()
+			.command([
+				'ai-agents',
+				'--mode=ask',
+				'--mode=text_gen',
+				'--json',
+				'--token=test',
+			])
+			.it(
+				'should list AI agents filtered by mode',
+				(context) => {
+					assert.equal(context.stdout, listFixture);
+				}
+			);
+	});
+
+	describe('ai-agents:get', function () {
+		const getExpectedResponseBody = {
+			id: '12345',
+			type: 'ai_agent',
+			origin: 'enterprise',
+			name: 'Test Agent',
+			access_state: 'enabled',
+			created_by: {
+				id: '11111',
+				type: 'user',
+			},
+			created_at: '2024-01-15T18:00:00.000Z',
+			modified_by: {
+				id: '11111',
+				type: 'user',
+			},
+			modified_at: '2024-01-15T18:00:00.000Z',
+		};
+		const getByIdFixture = getFixture('ai/get_ai_agent_by_id_response');
+		const getByIdYamlFixture = getFixture('ai/get_ai_agent_by_id_response_yaml.txt');
+
+		test.nock(TEST_API_ROOT, (api) =>
+			api.get('/2.0/ai_agents/12345').reply(200, getExpectedResponseBody)
+		)
+			.stdout()
+			.command(['ai-agents:get', '12345', '--json', '--token=test'])
+			.it(
+				'should get AI agent by ID and output the response (JSON Output)',
+				(context) => {
+					assert.equal(context.stdout, getByIdFixture);
+				}
+			);
+
+		test.nock(TEST_API_ROOT, (api) =>
+			api.get('/2.0/ai_agents/12345').reply(200, getExpectedResponseBody)
+		)
+			.stdout()
+			.command(['ai-agents:get', '12345', '--token=test'])
+			.it(
+				'should get AI agent by ID and output the response (YAML Output)',
+				(context) => {
+					assert.equal(context.stdout, getByIdYamlFixture);
+				}
+			);
+	});
+
+	describe('ai-agents:create', function () {
+		const createExpectedRequestBody = {
+			type: 'ai_agent',
+			name: 'My New Agent',
+			access_state: 'enabled',
+			ask: {
+				access_state: 'enabled',
+			},
+		};
+
+		const createExpectedResponseBody = {
+			id: '12345',
+			type: 'ai_agent',
+			origin: 'enterprise',
+			name: 'My New Agent',
+			access_state: 'enabled',
+			created_by: {
+				id: '11111',
+				type: 'user',
+			},
+			created_at: '2024-01-15T18:00:00.000Z',
+			modified_by: {
+				id: '11111',
+				type: 'user',
+			},
+			modified_at: '2024-01-15T18:00:00.000Z',
+		};
+		const createFixture = getFixture('ai/post_ai_agent_response');
+		const createYamlFixture = getFixture('ai/post_ai_agent_response_yaml.txt');
+
+		test.nock(TEST_API_ROOT, (api) =>
+			api
+				.post('/2.0/ai_agents', createExpectedRequestBody)
+				.reply(201, createExpectedResponseBody)
+		)
+			.stdout()
+			.command([
+				'ai-agents:create',
+				'--name=My New Agent',
+				'--access-state=enabled',
+				'--ask={"accessState": "enabled"}',
+				'--json',
+				'--token=test',
+			])
+			.it(
+				'should create AI agent and output the response (JSON Output)',
+				(context) => {
+					assert.equal(context.stdout, createFixture);
+				}
+			);
+
+		test.nock(TEST_API_ROOT, (api) =>
+			api
+				.post('/2.0/ai_agents', createExpectedRequestBody)
+				.reply(201, createExpectedResponseBody)
+		)
+			.stdout()
+			.command([
+				'ai-agents:create',
+				'--name=My New Agent',
+				'--access-state=enabled',
+				'--ask={"accessState": "enabled"}',
+				'--token=test',
+			])
+			.it(
+				'should create AI agent and output the response (YAML Output)',
+				(context) => {
+					assert.equal(context.stdout, createYamlFixture);
+				}
+			);
+	});
+
+	describe('ai-agents:update', function () {
+		const updateExpectedRequestBody = {
+			type: 'ai_agent',
+			name: 'Updated Agent Name',
+		};
+
+		const updateExpectedResponseBody = {
+			id: '12345',
+			type: 'ai_agent',
+			origin: 'enterprise',
+			name: 'Updated Agent Name',
+			access_state: 'enabled',
+			created_by: {
+				id: '11111',
+				type: 'user',
+			},
+			created_at: '2024-01-15T18:00:00.000Z',
+			modified_by: {
+				id: '11111',
+				type: 'user',
+			},
+			modified_at: '2024-01-15T20:00:00.000Z',
+		};
+		const updateFixture = getFixture('ai/put_ai_agent_response');
+		const updateYamlFixture = getFixture('ai/put_ai_agent_response_yaml.txt');
+
+		test.nock(TEST_API_ROOT, (api) =>
+			api
+				.put('/2.0/ai_agents/12345', updateExpectedRequestBody)
+				.reply(200, updateExpectedResponseBody)
+		)
+			.stdout()
+			.command([
+				'ai-agents:update',
+				'12345',
+				'--name=Updated Agent Name',
+				'--json',
+				'--token=test',
+			])
+			.it(
+				'should update AI agent and output the response (JSON Output)',
+				(context) => {
+					assert.equal(context.stdout, updateFixture);
+				}
+			);
+
+		test.nock(TEST_API_ROOT, (api) =>
+			api
+				.put('/2.0/ai_agents/12345', updateExpectedRequestBody)
+				.reply(200, updateExpectedResponseBody)
+		)
+			.stdout()
+			.command([
+				'ai-agents:update',
+				'12345',
+				'--name=Updated Agent Name',
+				'--token=test',
+			])
+			.it(
+				'should update AI agent and output the response (YAML Output)',
+				(context) => {
+					assert.equal(context.stdout, updateYamlFixture);
+				}
+			);
+	});
+
+	describe('ai-agents:delete', function () {
+		test.nock(TEST_API_ROOT, (api) =>
+			api.delete('/2.0/ai_agents/12345').reply(204)
+		)
+			.stderr()
+			.command(['ai-agents:delete', '12345', '--token=test'])
+			.it('should delete AI agent and output success message', (context) => {
+				assert.include(context.stderr, 'Deleted AI agent 12345');
+			});
+	});
 });
